@@ -62,3 +62,43 @@ func (d *DummyPhotoService) List(cursor uint64, limit uint64) ([]photovideo.Phot
 		return d.allEntities[cursor:last], nil
 	}
 }
+
+func (d *DummyPhotoService) Create(photo photovideo.Photo) (uint64, error) {
+	//TODO тут можно добавить проверку повтороного элемента.
+	if photo.Name == "" {
+		return 0, fmt.Errorf("У товара не заполнено поле Name")
+	}
+
+	photo.Id = uint64(d.Len())
+
+	d.allEntities = append(d.allEntities, photo)
+	return photo.Id, nil
+}
+
+//меняет значение по иднексу photoID uint64 на photo photovideo.Photo
+func (d *DummyPhotoService) Update(photoID uint64, photo photovideo.Photo) error {
+	if d.Len() == 0 {
+		return fmt.Errorf("Пустой список")
+	}
+
+	p, err := d.Describe(photoID)
+	if err != nil {
+		return err
+	}
+
+	p.Name = photo.Name
+
+	return nil
+}
+
+func (d *DummyPhotoService) Remove(photoID uint64) (bool, error) {
+	if d.Len() == 0 {
+		return false, fmt.Errorf("Пустой список")
+	}
+	_, err := d.Describe(photoID)
+	if err != nil {
+		return false, err
+	}
+	d.allEntities = append(d.allEntities[:photoID], d.allEntities[photoID+1:]...)
+	return true, nil
+}
