@@ -26,7 +26,7 @@ type DummyPhotoService struct {
 	allEntities []photovideo.Photo
 }
 
-func NewDummyPhotoService() *DummyPhotoService {
+func NewDummyPhotoService() PhotoService {
 	return &DummyPhotoService{allEntities: allEntities}
 }
 
