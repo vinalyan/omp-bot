@@ -29,7 +29,7 @@ func (c *PhotoCommander) CallbackList(callback *tgbotapi.CallbackQuery, callback
 
 	products, err := c.photoService.List(uint64(parsedData.Offset), uint64(limitOnPage))
 	if err != nil {
-		log.Println("PhotoCommander.List.CallbackList: error sending List - %v", products)
+		log.Println("PhotoCommander.List.CallbackList: List is empty")
 	}
 
 	viewSize := limitOnPage
@@ -50,14 +50,13 @@ func (c *PhotoCommander) CallbackList(callback *tgbotapi.CallbackQuery, callback
 	//msg := tgbotapi.NewMessage(callback.Message.Chat.ID, outputMsgText)
 	var msg tgbotapi.MessageConfig
 	if len(products) == 0 {
-		msg = tgbotapi.NewMessage(callback.Message.Chat.ID, fmt.Sprintf("No more products"))
+		msg = tgbotapi.NewMessage(callback.Message.Chat.ID, "No more products")
 		_, err = c.bot.Send(msg)
 		if err != nil {
 			log.Printf("PhotoCommander.CallbackList: error sending reply message to chat - %v", err)
 		}
 		return
 	} else {
-		log.Println("Зашел сюда")
 		msg = tgbotapi.NewMessage(callback.Message.Chat.ID, outputMsgText)
 	}
 
