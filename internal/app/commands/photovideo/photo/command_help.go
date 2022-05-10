@@ -6,7 +6,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-func (c *DummyPhotoCommander) Help(inputMsg *tgbotapi.Message) {
+func (c *PhotoCommander) Help(inputMsg *tgbotapi.Message) {
 	msg := tgbotapi.NewMessage(inputMsg.Chat.ID,
 		"/help - help\n"+
 			"/list - list products",

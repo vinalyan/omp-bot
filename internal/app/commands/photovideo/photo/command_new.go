@@ -2,6 +2,6 @@ package photo
 
 import tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 
-func (c *DummyPhotoCommander) New(inputMsg *tgbotapi.Message) {
+func (c *PhotoCommander) New(inputMsg *tgbotapi.Message) {
 
 }

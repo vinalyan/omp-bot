@@ -13,7 +13,7 @@ type CallbackListData struct {
 	Offset int `json:"offset"`
 }
 
-func (c *DummyPhotoCommander) CallbackList(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
+func (c *PhotoCommander) CallbackList(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
 	parsedData := CallbackListData{}
 	err := json.Unmarshal([]byte(callbackPath.CallbackData), &parsedData)
 	if err != nil {

@@ -16,7 +16,7 @@ type Commander interface {
 
 type PhotovideoCommander struct {
 	bot            *tgbotapi.BotAPI
-	photoCommander photocommander.PhotoCommander
+	photoCommander Commander
 }
 
 func NewPhotovideoCommander(bot *tgbotapi.BotAPI) *PhotovideoCommander {
