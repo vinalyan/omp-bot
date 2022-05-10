@@ -28,7 +28,7 @@ func NewPhotovideoCommander(bot *tgbotapi.BotAPI) *PhotovideoCommander {
 
 func (c *PhotovideoCommander) HandleCallback(callback *tgbotapi.CallbackQuery, callbackPath path.CallbackPath) {
 	switch callbackPath.Subdomain {
-	case "subdomain":
+	case "photo":
 		c.photoCommander.HandleCallback(callback, callbackPath)
 	default:
 		log.Printf("PhotovideoCommander.HandleCallback: unknown subdomain - %s", callbackPath.Subdomain)
@@ -37,7 +37,7 @@ func (c *PhotovideoCommander) HandleCallback(callback *tgbotapi.CallbackQuery, c
 
 func (c *PhotovideoCommander) HandleCommand(msg *tgbotapi.Message, commandPath path.CommandPath) {
 	switch commandPath.Subdomain {
-	case "subdomain":
+	case "photo":
 		c.photoCommander.HandleCommand(msg, commandPath)
 	default:
 		log.Printf("PhotovideoCommander.HandleCommand: unknown subdomain - %s", commandPath.Subdomain)
