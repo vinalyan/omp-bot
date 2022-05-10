@@ -2,6 +2,7 @@ package photo
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -9,18 +10,23 @@ import (
 )
 
 func (c *PhotoCommander) List(inputMsg *tgbotapi.Message) {
-	outputMsgText := "Here all the products: \n\n"
+	//outputMsgText := "Here all the products: \n\n"
 
-	firstIndx := 0
-	//entitesCount := c.photoService
-	limitOnPage := 4
+	const firstIndx = 0
+	const limitOnPage = 4
 
 	products, err := c.photoService.List(uint64(firstIndx), uint64(limitOnPage))
 	if err != nil {
-		log.Printf("DummyPhotoCommander.List: error sending List - %v", err)
+		log.Printf("PhotoCommander.List: error sending List - %v", err)
 	}
+
+	viewSize := limitOnPage
+	if len(products) < limitOnPage {
+		viewSize = len(products)
+	}
+	outputMsgText := fmt.Sprintf("List of the products (from %v to %v)\n\n", 1, viewSize)
 	for _, p := range products {
-		outputMsgText += p.Name
+		outputMsgText += p.String()
 		outputMsgText += "\n"
 	}
 
@@ -45,6 +51,6 @@ func (c *PhotoCommander) List(inputMsg *tgbotapi.Message) {
 
 	_, err = c.bot.Send(msg)
 	if err != nil {
-		log.Printf("DummyPhotoCommander.List: error sending reply message to chat - %v", err)
+		log.Printf("PhotoCommander.List: error sending reply message to chat - %v", err)
 	}
 }
